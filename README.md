@@ -18,16 +18,18 @@
 
 ## 📌 Overview
 
-Email-domain authentication auditor (SPF / DKIM / DMARC / MTA-STS / TLS-RPT / DANE / BIMI)
+OMailSec audits email-domain authentication posture across SPF, DKIM, DMARC, MTA-STS, TLS-RPT, DANE/TLSA, and BIMI. It works offline from published or pasted records, or with optional read-only dig/nslookup lookups, and produces a spoofability verdict, grade, remediation, and multi-format reports including SARIF.
 
 ---
 
 ## ✨ Features
 
-- Offline-first audit of PUBLISHED records (zone, dig, key: value or JSON) + optional read-only dig/nslookup
-- SPF (lookup budget), DKIM (DER key size), DMARC, MTA-STS, TLS-RPT, DANE/TLSA and BIMI analysers
-- Spoofability verdict, A+…F grade, record generator
-- Export TXT / MD / JSON / CSV / SARIF, --demo self-test
+- Offline-first audit of published records (zone file, dig output, key:value, or JSON) plus optional dig/nslookup
+- Analysers for SPF (lookup budget), DKIM (DER key size), DMARC, MTA-STS, TLS-RPT, DANE/TLSA, and BIMI
+- Spoofability verdict and A+…F grade with recommended hardened records (`--records`)
+- Live domain mode (`--domain`) or fully offline `--parse` / per-record flags
+- Min-severity, fail-on, and min-grade CI gates
+- Export TXT / MD / JSON / CSV / SARIF; `--demo` self-test and rule catalogue
 
 ---
 
@@ -41,7 +43,10 @@ Email-domain authentication auditor (SPF / DKIM / DMARC / MTA-STS / TLS-RPT / DA
 ## 🚀 Usage
 
 ```bash
-./OMailSec
+./OMailSec -d example.com
+./OMailSec --offline --spf "v=spf1 -all" --dmarc "v=DMARC1; p=reject" --json -o mailsec.json
+./OMailSec --demo --grade
+./OMailSec --help
 ```
 
 ---
